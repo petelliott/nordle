@@ -7,8 +7,17 @@
     <div>
       <h2>just by opening this page, you've done today's nordle</h2>
       <p>your current streak is <span id="curr-streak"></span> days. your best streak was <span id="best-streak"></span> days</p>
+
+      <button onClick="share()">share</button>
     </div>
     <script>
+      const firstday = 19057;
+      const currday = Math.floor(Date.now() / (1000*60*60*24));
+
+      function share() {
+          navigator.clipboard.writeText(`nordle #${(currday-firstday)+1} 100%`);
+      }
+
       let stats = localStorage.getItem('stats');
 
       if (stats !== null) {
@@ -20,8 +29,6 @@
               lastCheck: null,
           };
       }
-
-      const currday = Math.floor(Date.now() / (1000*60*60*24));
 
       if (stats.lastCheck && (currday - stats.lastCheck) >= 2) {
           stats.currStreak = 0;
