@@ -8,7 +8,7 @@
       <h2>just by opening this page, you've done today's nordle</h2>
       <p>your current streak is <span id="curr-streak"></span> days. your best streak was <span id="best-streak"></span> days</p>
 
-      <button onClick="share()">share</button>
+      <button onClick="share()">share</button> <span id="copied" style="visibility: hidden">copied to clipboard</span>
     </div>
     <script>
       const firstday = 19057;
@@ -16,6 +16,7 @@
 
       function share() {
           navigator.clipboard.writeText(`nordle #${(currday-firstday)+1} 100%`);
+          document.getElementById('copied').style.visibility = 'visible';
       }
 
       let stats = localStorage.getItem('stats');
