@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>nordle</title>
+  </head>
+  <body>
+    <div>
+      <h2>just by opening this page, you've done today's nordle</h2>
+      <p>your current streak is <span id="curr-streak"></span> days. your best streak was <span id="best-streak"></span> days</p>
+    </div>
+    <script>
+      let stats = localStorage.getItem('stats');
+
+      if (stats !== null) {
+          stats = JSON.parse(stats);
+      } else {
+          stats = {
+              currStreak: 0,
+              maxStreak: 0,
+              lastCheck: null,
+          };
+      }
+
+      const currday = Math.floor(Date.now() / (1000*60*60*24));
+
+      if (stats.lastCheck && (currday - stats.lastCheck) >= 2) {
+          stats.currStreak = 0;
+      }
+
+      if (!stats.lastCheck || (currday - stats.lastCheck) >= 1) {
+          stats.currStreak++;
+          stats.maxStreak = Math.max(stats.maxStreak, stats.currStreak);
+      }
+
+      stats.lastCheck = currday;
+
+      document.getElementById('curr-streak').innerHTML = stats.currStreak;
+      document.getElementById('best-streak').innerHTML = stats.maxStreak;
+
+      localStorage.setItem('stats', JSON.stringify(stats));
+    </script>
+  </body>
+</html>
