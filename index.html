@@ -17,11 +17,6 @@
       const firstday = 19057;
       const currday = Math.floor(Date.now() / (1000*60*60*24));
 
-      function share() {
-          navigator.clipboard.writeText(`nordle #${(currday-firstday)+1} 100%`);
-          document.getElementById('copied').style.visibility = 'visible';
-      }
-
       let stats = localStorage.getItem('stats');
 
       if (stats !== null) {
@@ -47,6 +42,12 @@
 
       document.getElementById('curr-streak').innerHTML = stats.currStreak;
       document.getElementById('best-streak').innerHTML = stats.maxStreak;
+
+      function share() {
+          navigator.clipboard.writeText(`nordle #${(currday-firstday)+1}, ${stats.currStreak} day streak\n🟩\nhttps://petelliott.github.io/nordle/`);
+          document.getElementById('copied').style.visibility = 'visible';
+      }
+
 
       localStorage.setItem('stats', JSON.stringify(stats));
     </script>
